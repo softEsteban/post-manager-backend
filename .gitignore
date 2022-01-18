@@ -64,4 +64,4 @@ typings/
 *.tsbuildinfo
 
 #Which I made
-.environment
+environment/
