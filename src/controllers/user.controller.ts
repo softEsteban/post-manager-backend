@@ -72,10 +72,24 @@ export class UserController {
       },
     })
     user: Omit<User, 'id'>,
-  ): Promise<User> {
-    return this.userRepository.create(user);
+  ): Promise<unknown> {
+
+    //create user
+    const u = await this.userRepository.create(user);
+
+    //encode passw
+    const userObj = {
+      username : u.userName,
+      role : u.role,
+      pass : u.passw,
+      mail : u.email
+    }
+
+    return {u, userObj};
+
   }
 
+//-----------------------------------------------------------------------
 
   @get('/users/count')
   @response(200, {

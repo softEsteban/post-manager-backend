@@ -4,9 +4,9 @@ import {Keys} from '../config/keys';
 import {User} from '../models';
 import {UserRepository} from '../repositories/user.repository';
 const jwt = require('jsonwebtoken');
-
+const cryptojs = require('crypto-js');
 // const generador = require('password-generator');
-// const cryptojs = require('crypto-js');
+
 
 
 @injectable({scope: BindingScope.TRANSIENT})
@@ -32,6 +32,13 @@ export class AutenticacionService {
     }
   }
 
+  //Encrypt password
+  encryptPassw(pass : string){
+    const encodedPass = cryptojs.MD5(pass).toString();
+    return encodedPass;
+  }
+
+  //Generate token
   generateToken(user: User){
     const token = jwt.sign({
       data: {
@@ -42,6 +49,16 @@ export class AutenticacionService {
     },
       Keys.claveJWT);
       return token;
+  }
+
+  //Validate token
+  validateToke (token : string){
+    try {
+      const datos = jwt.verify(token, Keys.claveJWT);
+      return datos;
+    } catch (error) {
+      return false;
+    }
   }
 
 
