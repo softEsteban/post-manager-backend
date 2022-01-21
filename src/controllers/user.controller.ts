@@ -34,7 +34,7 @@ export class UserController {
   async identificarCliente(
     @requestBody() credenciales: Credentials
   ){
-    const u = await this.authService.identifyUser(credenciales.username, credenciales.passw);
+    const u = await this.authService.identifyUser(credenciales.userName, credenciales.passw);
     if(u){
       const token = this.authService.generateToken(u);
       return{

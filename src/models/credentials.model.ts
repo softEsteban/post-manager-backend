@@ -6,7 +6,7 @@ export class Credentials extends Entity {
     type: 'string',
     required: true,
   })
-  username: string;
+  userName: string;
 
   @property({
     type: 'string',
